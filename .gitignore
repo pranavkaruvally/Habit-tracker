@@ -1,0 +1,47 @@
+# Miscellaneous
+habit_tracker/*.class
+habit_tracker/*.log
+habit_tracker/*.pyc
+habit_tracker/*.swp
+habit_tracker/.DS_Store
+habit_tracker/.atom/
+habit_tracker/.buildlog/
+habit_tracker/.history
+habit_tracker/.svn/
+habit_tracker/migrate_working_dir/
+
+# IntelliJ related
+habit_tracker/*.iml
+habit_tracker/*.ipr
+habit_tracker/*.iws
+habit_tracker/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+habit_tracker/**/doc/api/
+habit_tracker/**/ios/Flutter/.last_build_id
+habit_tracker/.dart_tool/
+habit_tracker/.flutter-plugins
+habit_tracker/.flutter-plugins-dependencies
+habit_tracker/.packages
+habit_tracker/.pub-cache/
+habit_tracker/.pub/
+habit_tracker//build/
+
+# Web related
+habit_tracker/lib/generated_plugin_registrant.dart
+
+# Symbolication related
+habit_tracker/app.*.symbols
+
+# Obfuscation related
+habit_tracker/app.*.map.json
+
+# Android Studio will place build artifacts here
+habit_tracker/android/app/debug
+habit_tracker/android/app/profile
+habit_tracker/android/app/release
