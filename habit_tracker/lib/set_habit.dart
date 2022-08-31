@@ -51,6 +51,40 @@ Widget calendar() {
               ),);
 }
 
+Map<String, bool> ifButtonPressed = {'Learn 5 new words': false, 'Get up Early': false, 'Create an App a day': false};
+
+class MyHabitTile extends StatefulWidget {
+  const MyHabitTile({Key? key, required this.habit}) : super(key: key);
+  final String habit;
+  @override
+  State<MyHabitTile> createState() => _MyHabitTileState();
+}
+
+class _MyHabitTileState extends State<MyHabitTile> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+    leading: IconButton(
+      icon: !(ifButtonPressed[widget.habit] ?? false)
+        ? const Icon(Icons.check_circle_outlined, color: Color(0xFF898a8c), size: 35,)
+        : const Icon(Icons.check_circle_rounded, color: Color(0xFF7525fe), size: 35,),
+      onPressed: () => {
+        setState(() {
+          (ifButtonPressed[widget.habit] ?? false) ? ifButtonPressed[widget.habit]=false : ifButtonPressed[widget.habit]=true;
+        })
+      },
+    ),
+    title: Text(widget.habit, style: const TextStyle(color: Colors.white)),
+  );
+  }
+}
+
+Widget myHabits() {
+  return ListView(
+    children: const<Widget>[MyHabitTile(habit: "Learn 5 new words"), MyHabitTile(habit: "Get up Early"), MyHabitTile(habit: "Create an App a day")],
+  );
+}
+
 
 class SetHabit extends StatefulWidget {
   const SetHabit({Key? key}) : super(key: key);
@@ -80,7 +114,7 @@ class _SetHabitState extends State<SetHabit> {
         ),
         const SizedBox(width: 10.0,)],
       ),
-      body: Center(child: calendar()),
+      body: Column(children: <Widget>[const Expanded(child: SizedBox()), calendar(), Expanded(child: myHabits())]),
     );
   }
 }
