@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'models.dart';
 
 Widget quickHabit() {
   return Container(
@@ -23,6 +25,23 @@ class AddHabit extends StatefulWidget {
 }
 
 class _AddHabitState extends State<AddHabit> {
+
+  final textEditingController = TextEditingController();
+  bool pressed = false;
+
+  String? get _errorText {
+    final fieldValue = textEditingController.text;
+
+    if (fieldValue.isEmpty && pressed) {
+      return 'Can\'t be empty';
+    }
+    return null;
+  }
+
+  void addHabit() async {
+    //var habits = await Hive.openBox('habits');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,20 +54,36 @@ class _AddHabitState extends State<AddHabit> {
           children: [Container(
                 color: Colors.white,
                 child: TextField(
+                  controller: textEditingController,
                   cursorColor: const Color(0xFF7525fe),
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     fillColor: Colors.deepPurpleAccent,
                     labelText: 'Add Habit',
+                    errorText: pressed ? _errorText : null,
                     focusedBorder: const OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     suffix: IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                       icon: const Icon(Icons.arrow_upward, size: 20),
-                      onPressed: () => {},
+                      onPressed: () {
+                        setState(() {
+                          pressed = true;
+                        });
+                        if (textEditingController.text.isNotEmpty) {
+                          addHabit();
+                        }
+                        },
               ),
                   ),
+                  onChanged: (text) {
+                    if (textEditingController.text.isNotEmpty) {
+                      setState(() {
+                        pressed = false;
+                      });
+                    }
+                  },
                 ),
               ),]
         ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracker/models.dart';
 import 'set_habit.dart';
+import 'package:hive/hive.dart';
 
 
 const primaryColor = Color(0xFF131a27);
-void main() {
+void main() async {
+  Hive.registerAdapter(HabitAdapter());
   runApp(const MyApp());
 }
 
