@@ -60,7 +60,7 @@ class _AddHabitState extends State<AddHabit> {
                     border: const OutlineInputBorder(),
                     fillColor: Colors.deepPurpleAccent,
                     labelText: 'Add Habit',
-                    errorText: pressed ? _errorText : null,
+                    errorText: _errorText,
                     focusedBorder: const OutlineInputBorder(),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     suffix: IconButton(
