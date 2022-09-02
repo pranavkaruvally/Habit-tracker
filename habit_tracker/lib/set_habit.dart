@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quick_habit.dart';
 
 Widget calendarTile({date, weekDay}) {
   return Container(
@@ -110,7 +111,11 @@ class _SetHabitState extends State<SetHabit> {
               ),
             ),
           tooltip: 'Add new habit',
-          onPressed: () => {},
+          onPressed: () => showModalBottomSheet<void>(
+            context: context,
+            builder: (context) => const AddHabit(),
+            //isScrollControlled: true,
+          ),
         ),
         const SizedBox(width: 10.0,)],
       ),
