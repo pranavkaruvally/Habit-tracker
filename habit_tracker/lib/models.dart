@@ -34,4 +34,18 @@ class Habit extends HiveObject {
     dates = {date: false};
     color = _setColor();
   }
+
+  void addScore() {
+    score = score! + 2;
+
+    if (score! > 60){
+      delete();
+    }
+  }
+
+  void punshScore() {
+    if (score! > 0) {
+      score = score! - 1;
+    }
+  }
 }
