@@ -57,9 +57,10 @@ Widget calendar() {
 Map<String, bool> ifButtonPressed = {'Learn 5 new words': false, 'Get up Early': false, 'Create an App a day': false};
 
 class MyHabitTile extends StatefulWidget {
-  const MyHabitTile({Key? key, required this.habit, required this.color}) : super(key: key);
+  const MyHabitTile({Key? key, required this.habit, required this.color, required this.habitObject}) : super(key: key);
   final String habit;
   final int color;
+  final Habit habitObject;
   @override
   State<MyHabitTile> createState() => _MyHabitTileState();
 }
@@ -79,6 +80,12 @@ class _MyHabitTileState extends State<MyHabitTile> {
       },
     ),
     title: Text(widget.habit, style: const TextStyle(color: Colors.white)),
+    trailing: IconButton(
+      icon: const Icon(Icons.clear_outlined, color: Colors.white),
+      onPressed: () {
+        widget.habitObject.delete();
+      },
+      ),
   );
   }
 }
@@ -110,6 +117,7 @@ class _MyHabitsState extends State<MyHabits> {
           return MyHabitTile(
             habit: habitList![index].habit.toString(),
             color: habitList![index].color,
+            habitObject: habitList![index],
           );
         },
       );
