@@ -43,9 +43,29 @@ class Habit extends HiveObject {
     }
   }
 
+  void reduceScore() {
+    score = score! - 2;
+  }
+
   void punshScore() {
     if (score! > 0) {
       score = score! - 1;
     }
+  }
+
+  void checkTodaysTask() {
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
+
+    dates![date] = true;
+    addScore();
+  }
+
+  void uncheckTodaysTask() {
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
+
+    dates![date] = false;
+    reduceScore();
   }
 }

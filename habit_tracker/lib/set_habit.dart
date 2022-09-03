@@ -69,8 +69,6 @@ class _CalendarState extends State<Calendar> {
   }
 }
 
-Map<String, bool> ifButtonPressed = {'Learn 5 new words': false, 'Get up Early': false, 'Create an App a day': false};
-
 class MyHabitTile extends StatefulWidget {
   const MyHabitTile({Key? key, required this.habit, required this.color, required this.habitObject}) : super(key: key);
   final String habit;
@@ -81,17 +79,28 @@ class MyHabitTile extends StatefulWidget {
 }
 
 class _MyHabitTileState extends State<MyHabitTile> {
+  DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   @override
   Widget build(BuildContext context) {
     return ListTile(
     leading: IconButton(
-      icon: !(ifButtonPressed[widget.habit] ?? false)
+      icon: !(widget.habitObject.dates![date] ?? false)
         ? const Icon(Icons.check_circle_outlined, color: Color(0xFF898a8c), size: 35,)
         : Icon(Icons.check_circle_rounded, color: Color(widget.color), size: 35,),
-      onPressed: () => {
+      onPressed: ()  {
         setState(() {
-          (ifButtonPressed[widget.habit] ?? false) ? ifButtonPressed[widget.habit]=false : ifButtonPressed[widget.habit]=true;
-        })
+          if (widget.habitObject.dates![date] ?? false) {
+            widget.habitObject.dates![date]=false;
+            widget.habitObject.uncheckTodaysTask();
+          } 
+          else {
+            widget.habitObject.dates![date]=true;
+            widget.habitObject.checkTodaysTask();
+          }
+          widget.habitObject.save();
+        });
+        // var habits = Hive.box<Habit>('habits');
+        // print(habits.values.map((x) => x.score));
       },
     ),
     title: Text(widget.habit, style: const TextStyle(color: Colors.white)),

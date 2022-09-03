@@ -50,6 +50,7 @@ class _AddHabitState extends State<AddHabit> {
 
     habit.setHabit(habitText);
     habits?.put(habitText, habit);
+    //print(habits?.values.map((x) => x.dates).toList());
   }
 
   @override
