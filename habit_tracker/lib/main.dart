@@ -10,17 +10,23 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox<Habit>('habits');
   runApp(const MyApp());
+  addNewDate();
 }
 
 void addNewDate() {
   var habitBox = Hive.box<Habit>('habits');
   DateTime today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime yesterday = today.subtract(const Duration(days: 1));
   List<Habit> habits = habitBox.values.toList();
 
   for (int i=0; i<habits.length; i++) {
     if (!habits[i].dates!.containsKey(today)) {
       habits[i].dates![today] = false;
+      if (habits[i].dates![yesterday] == false) {
+        habits[i].punishScore();
+      }
     }
+    habits[i].save();
   }
 
 }

@@ -33,11 +33,11 @@ class Habit extends HiveObject {
     this.habit = habit;
     dates = {date: false};
     color = _setColor();
+    score = 0;
   }
 
   void addScore() {
     score = score! + 2;
-
     if (score! > 60){
       delete();
     }
@@ -47,7 +47,7 @@ class Habit extends HiveObject {
     score = score! - 2;
   }
 
-  void punshScore() {
+  void punishScore() {
     if (score! > 0) {
       score = score! - 1;
     }
