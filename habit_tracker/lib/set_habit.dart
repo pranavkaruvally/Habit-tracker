@@ -97,9 +97,25 @@ class _MyHabitTileState extends State<MyHabitTile> {
     title: Text(widget.habit, style: const TextStyle(color: Colors.white)),
     trailing: IconButton(
       icon: const Icon(Icons.clear_outlined, color: Colors.white),
-      onPressed: () {
-        widget.habitObject.delete();
-      },
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: const Text("Delete?"),
+              content: const Text("Do you really want to delete?"),
+              actions: [
+                TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text("No"),),
+                TextButton(
+                  onPressed: () {
+                    widget.habitObject.delete();
+                    Navigator.of(context).pop();
+                    },
+                    child: const Text("Yes"),),
+              ],
+            );
+        }
+      )
+        //widget.habitObject.delete();
       ),
   );
   }
