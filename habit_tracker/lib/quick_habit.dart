@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'models.dart';
@@ -25,9 +27,15 @@ class AddHabit extends StatefulWidget {
 }
 
 class _AddHabitState extends State<AddHabit> {
-
   final textEditingController = TextEditingController();
   bool pressed = false;
+  var habits;
+
+    @override
+  void initState() {
+    super.initState();
+    habits = Hive.box<Habit>('habits');
+  }
 
   String? get _errorText {
     final fieldValue = textEditingController.text;
@@ -39,7 +47,12 @@ class _AddHabitState extends State<AddHabit> {
   }
 
   void addHabit() async {
-    //var habits = await Hive.openBox('habits');
+    var habit = Habit();
+    String habitText = textEditingController.text;
+
+    habit.setHabit(habitText);
+    habits.put(habitText, habit);
+    print(habits.values.map((x) => x.color).toList());
   }
 
   @override
@@ -73,6 +86,7 @@ class _AddHabitState extends State<AddHabit> {
                         });
                         if (textEditingController.text.isNotEmpty) {
                           addHabit();
+                          Navigator.pop(context);
                         }
                         },
               ),

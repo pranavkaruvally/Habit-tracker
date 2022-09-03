@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'quick_habit.dart';
+import 'models.dart';
 
 Widget calendarTile({date, weekDay}) {
   return Container(
@@ -55,8 +57,9 @@ Widget calendar() {
 Map<String, bool> ifButtonPressed = {'Learn 5 new words': false, 'Get up Early': false, 'Create an App a day': false};
 
 class MyHabitTile extends StatefulWidget {
-  const MyHabitTile({Key? key, required this.habit}) : super(key: key);
+  const MyHabitTile({Key? key, required this.habit, required this.color}) : super(key: key);
   final String habit;
+  final int color;
   @override
   State<MyHabitTile> createState() => _MyHabitTileState();
 }
@@ -68,7 +71,7 @@ class _MyHabitTileState extends State<MyHabitTile> {
     leading: IconButton(
       icon: !(ifButtonPressed[widget.habit] ?? false)
         ? const Icon(Icons.check_circle_outlined, color: Color(0xFF898a8c), size: 35,)
-        : const Icon(Icons.check_circle_rounded, color: Color(0xFF7525fe), size: 35,),
+        : Icon(Icons.check_circle_rounded, color: Color(widget.color), size: 35,),
       onPressed: () => {
         setState(() {
           (ifButtonPressed[widget.habit] ?? false) ? ifButtonPressed[widget.habit]=false : ifButtonPressed[widget.habit]=true;
@@ -80,10 +83,39 @@ class _MyHabitTileState extends State<MyHabitTile> {
   }
 }
 
-Widget myHabits() {
-  return ListView(
-    children: const<Widget>[MyHabitTile(habit: "Learn 5 new words"), MyHabitTile(habit: "Get up Early"), MyHabitTile(habit: "Create an App a day")],
-  );
+// Widget myHabits() {
+//   return ListView(
+//     children: const<Widget>[MyHabitTile(habit: "Learn 5 new words"), MyHabitTile(habit: "Get up Early"), MyHabitTile(habit: "Create an App a day")],
+//   );
+// }
+
+class MyHabits extends StatefulWidget {
+  const MyHabits({Key? key}) : super(key: key);
+
+  @override
+  State<MyHabits> createState() => _MyHabitsState();
+}
+
+class _MyHabitsState extends State<MyHabits> {
+  List<dynamic>? habitList;
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<Box>(
+      valueListenable: Hive.box<Habit>('habits').listenable(),
+    builder: (context, box, widget) {
+      habitList = box.values.toList();
+      return ListView.builder(
+        itemCount: habitList?.length ?? 0,
+        itemBuilder: (BuildContext context, int index) {
+          return MyHabitTile(
+            habit: habitList![index].habit.toString(),
+            color: habitList![index].color,
+          );
+        },
+      );
+    }
+    );
+  }
 }
 
 
@@ -119,7 +151,7 @@ class _SetHabitState extends State<SetHabit> {
         ),
         const SizedBox(width: 10.0,)],
       ),
-      body: Column(children: <Widget>[const Expanded(child: SizedBox()), calendar(), Expanded(child: myHabits())]),
+      body: Column(children: <Widget>[const Expanded(child: SizedBox()), calendar(), const Expanded(child: MyHabits())]),
     );
   }
 }
