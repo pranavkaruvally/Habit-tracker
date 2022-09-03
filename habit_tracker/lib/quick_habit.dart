@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'models.dart';
@@ -29,7 +27,7 @@ class AddHabit extends StatefulWidget {
 class _AddHabitState extends State<AddHabit> {
   final textEditingController = TextEditingController();
   bool pressed = false;
-  var habits;
+  Box<Habit>? habits;
 
     @override
   void initState() {
@@ -51,7 +49,7 @@ class _AddHabitState extends State<AddHabit> {
     String habitText = textEditingController.text;
 
     habit.setHabit(habitText);
-    habits.put(habitText, habit);
+    habits?.put(habitText, habit);
   }
 
   @override
