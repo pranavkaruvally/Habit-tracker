@@ -3,7 +3,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'quick_habit.dart';
 import 'models.dart';
 
-Widget calendarTile({date, weekDay}) {
+class Calendar extends StatefulWidget {
+  const Calendar({Key? key}) : super(key: key);
+
+  @override
+  State<Calendar> createState() => _CalendarState();
+}
+
+class _CalendarState extends State<Calendar> {
+
+  Widget calendarTile({date, weekDay}) {
   return Container(
           margin: const EdgeInsets.all(10.0),
           height: 80,
@@ -24,34 +33,40 @@ Widget calendarTile({date, weekDay}) {
             ),
           ),
         );
-}
+    }
 
-int date(int index) {
-  final thisDay = DateTime.now();
-  final concernedDay = thisDay.add(Duration(hours:24*index));
-  return concernedDay.day;
-}
+    int date(int index) {
+      final thisDay = DateTime.now();
+      final concernedDay = thisDay.add(Duration(hours:24*index));
+      return concernedDay.day;
+    }
 
-String week(int index) {
-  const List<String> weeks = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  final thisDay = DateTime.now();
-  final concernedDay = thisDay.add(Duration(hours:24*index));
-  return weeks[concernedDay.weekday-1];
-}
+    String week(int index) {
+      const List<String> weeks = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      final thisDay = DateTime.now();
+      final concernedDay = thisDay.add(Duration(hours:24*index));
+      return weeks[concernedDay.weekday-1];
+    }
 
-Widget calendar() {
-  return Container(
-    height: 95,
-    color: const Color(0xFF1b232e),
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 7,
-      itemBuilder: (context, index) => calendarTile(date: date(index), weekDay: week(index)),
-      // children: <Widget>[
-      //   calenderTile(date:2, weekDay:'Tue'),
-      //   calenderTile(date:3, weekDay:'Wed'),
-      //           ],
-              ),);
+    Widget calendar() {
+      return Container(
+        height: 95,
+        color: const Color(0xFF1b232e),
+        child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 7,
+        itemBuilder: (context, index) => calendarTile(date: date(index), weekDay: week(index)),
+        // children: <Widget>[
+        //   calenderTile(date:2, weekDay:'Tue'),
+        //   calenderTile(date:3, weekDay:'Wed'),
+        //           ],
+            ),);
+    }
+
+  @override
+  Widget build(BuildContext context) {
+    return calendar();
+  }
 }
 
 Map<String, bool> ifButtonPressed = {'Learn 5 new words': false, 'Get up Early': false, 'Create an App a day': false};
@@ -159,7 +174,7 @@ class _SetHabitState extends State<SetHabit> {
         ),
         const SizedBox(width: 10.0,)],
       ),
-      body: Column(children: <Widget>[const Expanded(child: SizedBox()), calendar(), const Expanded(child: MyHabits())]),
+      body: Column(children: const <Widget>[Expanded(child: SizedBox()), Calendar(), Expanded(child: MyHabits())]),
     );
   }
 }
