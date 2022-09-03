@@ -11,7 +11,7 @@ class Habit extends HiveObject {
   @HiveField(1, defaultValue: 0)
   int? score;
 
-  @HiveField(2)
+  @HiveField(2, defaultValue: {})
   Map<DateTime, bool>? dates;
 
   @HiveField(3)

@@ -12,6 +12,19 @@ void main() async {
   runApp(const MyApp());
 }
 
+void addNewDate() {
+  var habitBox = Hive.box<Habit>('habits');
+  DateTime today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  List<Habit> habits = habitBox.values.toList();
+
+  for (int i=0; i<habits.length; i++) {
+    if (!habits[i].dates!.containsKey(today)) {
+      habits[i].dates![today] = false;
+    }
+  }
+
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
