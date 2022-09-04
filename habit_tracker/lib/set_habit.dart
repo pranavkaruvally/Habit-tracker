@@ -126,6 +126,20 @@ class _MyHabitTileState extends State<MyHabitTile> {
       )
         //widget.habitObject.delete();
       ),
+      subtitle: Row(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Color(widget.color)
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6 * (widget.habitObject.score!.toInt()/60),
+                height: 1
+                ),),
+          const Expanded(child: SizedBox()),
+        ],
+      ),
   );
   }
 }
