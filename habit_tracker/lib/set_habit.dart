@@ -12,7 +12,7 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
 
-  Widget calendarTile({date, weekDay}) {
+  Widget calendarTile({date, weekDay, bool today=false}) {
   return Container(
           margin: const EdgeInsets.all(10.0),
           height: 80,
@@ -20,13 +20,13 @@ class _CalendarState extends State<Calendar> {
           child: Card(
             shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),),
-            color: const Color(0xFF131a27),
+            color: today ? const Color(0xFF737ae8) : const Color(0xFF131a27),
             child: Center(
               child: Column(
                 children: <Widget>[
                   Expanded(child: Container()),
-                  Container(margin: const EdgeInsets.all(5.0), child: Text("$date", style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold))),
-                  Container(margin: const EdgeInsets.all(5.0), child: Text("$weekDay", style: const TextStyle(color: Colors.white, fontSize: 15))),
+                  Container(margin: const EdgeInsets.all(5.0), child: Text("$date", style: TextStyle(color: today ? Colors.white : const Color(0xFF737479), fontSize: 20, fontWeight: today ? FontWeight.w900 : FontWeight.w600))),
+                  Container(margin: const EdgeInsets.all(5.0), child: Text("$weekDay", style: TextStyle(color: today ? Colors.white : const Color(0xFF737479), fontSize: 15, fontWeight: today ? FontWeight.w800 : FontWeight.normal))),
                   Expanded(child: Container()),
                 ],
               ),
@@ -55,7 +55,14 @@ class _CalendarState extends State<Calendar> {
         child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 7,
-        itemBuilder: (context, index) => calendarTile(date: date(index), weekDay: week(index)),
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return calendarTile(date: date(index), weekDay: week(index), today: true);
+          }
+          else {
+            return calendarTile(date: date(index), weekDay: week(index));
+          }
+        }
         // children: <Widget>[
         //   calenderTile(date:2, weekDay:'Tue'),
         //   calenderTile(date:3, weekDay:'Wed'),
