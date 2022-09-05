@@ -10,25 +10,49 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox<Habit>('habits');
   runApp(const MyApp());
-  addNewDate();
+  updateAppDate();
 }
 
-void addNewDate() {
+// void addNewDate() {
+//   var habitBox = Hive.box<Habit>('habits');
+//   DateTime today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+//   DateTime yesterday = today.subtract(const Duration(days: 1));
+//   List<Habit> habits = habitBox.values.toList();
+
+//   for (int i=0; i<habits.length; i++) {
+//     if (!habits[i].dates!.containsKey(today)) {
+//       habits[i].dates![today] = false;
+//       if (habits[i].dates![yesterday] == false) {
+//         habits[i].punishScore();
+//       }
+//     }
+//     habits[i].save();
+//   }
+
+// }
+
+void updateAppDate() {
   var habitBox = Hive.box<Habit>('habits');
   DateTime today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  DateTime yesterday = today.subtract(const Duration(days: 1));
   List<Habit> habits = habitBox.values.toList();
 
-  for (int i=0; i<habits.length; i++) {
-    if (!habits[i].dates!.containsKey(today)) {
-      habits[i].dates![today] = false;
-      if (habits[i].dates![yesterday] == false) {
-        habits[i].punishScore();
+  for(int i=0; i<habits.length; i++) {
+    DateTime lastDay = habits[i].lastOpenedDate ?? today;
+
+    int difference = today.difference(lastDay).inDays;
+    
+    if (lastDay != today) {
+      if (habits[i].dates![lastDay] == false) {
+        habits[i].score = habits[i].score! - difference;
+      }
+      else {
+        if (difference > 1) {
+          habits[i].score = habits[i].score! - difference + 1;
+        }
+        habits[i].save();
       }
     }
-    habits[i].save();
   }
-
 }
 
 class MyApp extends StatelessWidget {

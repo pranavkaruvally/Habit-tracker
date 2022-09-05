@@ -17,6 +17,9 @@ class Habit extends HiveObject {
   @HiveField(3)
   int? color;
 
+  @HiveField(4)
+  DateTime? lastOpenedDate;
+
   int _setColor() {
     final random = Random();
     List<int> colors = [0xFF7424fe, 0xFF2096f2, 0xFFf54337, 0xFF00bcd4];

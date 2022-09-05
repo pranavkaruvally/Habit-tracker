@@ -135,15 +135,15 @@ class _MyHabitTileState extends State<MyHabitTile> {
       ),
       subtitle: Row(
         children: [
-          DecoratedBox(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            height: 1,
+            width: MediaQuery.of(context).size.width * 0.6 * (widget.habitObject.score!.toInt()/60),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Color(widget.color)
               ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.6 * (widget.habitObject.score!.toInt()/60),
-                height: 1
-                ),),
+              ),
           const Expanded(child: SizedBox()),
         ],
       ),
