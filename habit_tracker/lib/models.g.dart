@@ -21,13 +21,14 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..score = fields[1] == null ? 0 : fields[1] as int?
       ..dates =
           fields[2] == null ? {} : (fields[2] as Map?)?.cast<DateTime, bool>()
-      ..color = fields[3] as int?;
+      ..color = fields[3] as int?
+      ..lastOpenedDate = fields[4] as DateTime?;
   }
 
   @override
   void write(BinaryWriter writer, Habit obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.habit)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..writeByte(2)
       ..write(obj.dates)
       ..writeByte(3)
-      ..write(obj.color);
+      ..write(obj.color)
+      ..writeByte(4)
+      ..write(obj.lastOpenedDate);
   }
 
   @override
