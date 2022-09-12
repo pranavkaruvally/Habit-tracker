@@ -2,20 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'models.dart';
 
-Widget quickHabit() {
+class QuickHabit extends StatelessWidget {
+  const QuickHabit({Key? key}) : super(key: key);
+
+  Widget quickHabitTile() {
   return Container(
-    height: 120.0,
-    width: 120.0,
-    color: Colors.red,
-    child: Container(
-      margin: const EdgeInsets.all(20.0),
-      height: 80.0,
-      width: 80.0,
-      color: Colors.green,
-      child: const Text('JOGGING'),
-    ),
-  );
+    margin: const EdgeInsets.all(20.0),
+    height: 80.0,
+    width: 80.0,
+    color: Colors.green,
+    child: const Text('JOGGING'),
+    );
+  }
+
+  Widget quickHabit() {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        quickHabitTile(), quickHabitTile(),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return quickHabit();
+  }
 }
+
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key}) : super(key: key);

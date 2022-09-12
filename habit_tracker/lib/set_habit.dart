@@ -220,7 +220,7 @@ class _SetHabitState extends State<SetHabit> {
         ),
         const SizedBox(width: 10.0,)],
       ),
-      body: Column(children: const <Widget>[Expanded(child: SizedBox()), Calendar(), Expanded(child: MyHabits())]),
+      body: Column(children: const <Widget>[Expanded(child: QuickHabit()), Calendar(), Expanded(child: MyHabits())]),
     );
   }
 }
