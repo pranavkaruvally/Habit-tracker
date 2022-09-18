@@ -4,40 +4,54 @@ import 'models.dart';
 
 class QuickHabit extends StatelessWidget {
   const QuickHabit({Key? key}) : super(key: key);
+
+  void addHabit({habitText}) {
+    Box<Habit> habits = Hive.box<Habit>('habits');
+    var habit = Habit();
+
+    habit.setHabit(habitText);
+    habits.put(habitText, habit);
+  }
+
   Widget quickHabitTile({String heading="YP", String habitText="Yoga Practice", int color=0xff01bcd5}) {
-  return Container(
-    margin: const EdgeInsets.only(left: 10.0, right: 10, top: 50, bottom: 50),
-    height: 200.0,
-    width: 140.0,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: Color(color),
-    ),
-    child: Stack(
-      children: [
-        Align(
-              alignment: const Alignment(-0.99, -0.4),
-              child: Container(
-                margin: const EdgeInsets.all(15),
-                child: Text(heading,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900)),
-              )),
-        Align(
-              alignment: const Alignment(-0.99, 0.6),
-              child: Container(
-                margin: const EdgeInsets.all(15),
-                child: Text(habitText,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700)),
-              )),
-      ],
-    ),
-    );
+  return GestureDetector(
+    onTap: () {
+      addHabit(habitText: habitText);
+    },
+    child: Container(
+      margin: const EdgeInsets.only(left: 10.0, right: 10, top: 50, bottom: 50),
+      height: 200.0,
+      width: 140.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Color(color),
+      ),
+      child: Stack(
+        children: [
+          Align(
+                alignment: const Alignment(-0.99, -0.4),
+                child: Container(
+                  margin: const EdgeInsets.all(15),
+                  child: Text(heading,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w900)),
+                )),
+          Align(
+                alignment: const Alignment(-0.99, 0.6),
+                child: Container(
+                  margin: const EdgeInsets.all(15),
+                  child: Text(habitText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700)),
+                )),
+        ],
+      ),
+      ),
+  );
   }
 
   Widget quickHabit() {
